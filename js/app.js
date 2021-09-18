@@ -1,6 +1,27 @@
+//Utilizado função auto invocal para o usuário não ter acesso
 (function() {
+    //Vai carregar a página inicial
+    function loadHome() {
+        const content = document.querySelector('#content')
 
+        fetch('home.html')
+            .then(resp => resp.text())
+            .then(text => {
+                return new Promise((resolve, reject) => {
+                    try {
+                        content.innerHTML = text
+                        resolve(text)
+                    }catch(e) {
+                        reject(e)
+                    }
+                })
+            }).then(() => parallax())
+    } loadHome()
+
+    //função resposável por reproduzir os efeitos da lua, montanha e estrlas
     function parallax() {
+        console.log('teste')
+
         const moon = document.getElementById('moon')
         const stars = document.getElementById('stars')
         const mountains_front = document.getElementById('mountains_front')
@@ -19,8 +40,9 @@
             }
         })
     }
-    parallax()
+    
 
+    //Essa função vai ter evento do subMenu, do modo mobile
     function getSubmenu() {
         const section = document.querySelector('section')
         const header = document.querySelector('header')
@@ -30,11 +52,8 @@
 
         let submenuActive = false
         const noneSubmenu = () => {
-     
-                if(submenuActive)
-                    submenu.style.display = 'none'
-                
-
+            if(submenuActive)
+                submenu.style.display = 'none'
         } 
 
         toggle.addEventListener('click', () => {
@@ -44,23 +63,48 @@
         })
         
         section.addEventListener('click', noneSubmenu)
-    
-    }
-    getSubmenu()
+    } getSubmenu()
 
+    // Vai carregar todas as páginas solicitadas
+    function loadContet() {
+        const links = document.querySelectorAll('#menu a')
+        const content = document.querySelector('#content') 
 
-    window.onhashchange = function(e) {
-        let oldURL = e.oldURL.split('#')[1]
-        let newURL= e.newURL.split('#')[1]
-       
-        document.querySelector(`#menu a[href='#Home']`).classList.remove('active')
+        links.forEach(link => {
+            link.onclick = e => {
+                e.preventDefault()
+                
+                const nameLink = link.href.split('#')[1].toLowerCase()
 
-        console.log(oldURL, newURL)
-        let oldMenu = document.querySelector(`#menu a[href='#${oldURL}']`)
-        let newMenu = document.querySelector(`#menu a[href='#${newURL}']`)
+                document.querySelector(`#menu a[href='#home']`).classList.remove('active')
 
-        oldMenu && oldMenu.classList.remove('active')
-        newMenu && newMenu.classList.add('active')
+                let oldMenu = document.querySelector('.active')
+                let newMenu = document.querySelector(`#menu a[href='#${nameLink}']`)
 
-    }
+                oldMenu && oldMenu.classList.remove('active')
+                newMenu && newMenu.classList.add('active')
+                
+                fetch(`${nameLink}.html`)
+                    .then(resp => resp.text()) //Transforma em texto
+                    .then(text =>  {
+                        return new Promise((resolve,reject) => {
+                            try {
+                                content.innerHTML = text
+                                resolve(text)
+                            }catch(e) {
+                                reject(e)
+                            }
+                        })
+                    }) /* Vai colocar o conteúdo da página na section, e
+                            retorna uma nova promise, para exucatar o próximo
+                            then, somente quando a página for carregada.
+                        */
+                    .then(() => {
+                        if(nameLink === 'home')
+                            parallax()
+                    }) //Executa o efeito parallax, se a página for a Home
+            }
+        })
+    } loadContet() 
+
 })()
