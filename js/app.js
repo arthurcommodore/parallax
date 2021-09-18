@@ -36,8 +36,6 @@
                 
 
         } 
-        
-
 
         toggle.addEventListener('click', () => {
             submenu.style.display = 'block'
@@ -49,4 +47,20 @@
     
     }
     getSubmenu()
+
+
+    window.onhashchange = function(e) {
+        let oldURL = e.oldURL.split('#')[1]
+        let newURL= e.newURL.split('#')[1]
+       
+        document.querySelector(`#menu a[href='#Home']`).classList.remove('active')
+
+        console.log(oldURL, newURL)
+        let oldMenu = document.querySelector(`#menu a[href='#${oldURL}']`)
+        let newMenu = document.querySelector(`#menu a[href='#${newURL}']`)
+
+        oldMenu && oldMenu.classList.remove('active')
+        newMenu && newMenu.classList.add('active')
+
+    }
 })()
