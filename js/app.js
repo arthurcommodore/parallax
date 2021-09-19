@@ -28,7 +28,7 @@ function loadHome() {
         }).then(text => {
             parallax()
             exploreEvent()
-            viewText('block', 205) //Aparece o texto com um pequeno delay
+            viewText('block', 355) //Aparece o texto com um pequeno delay
         })
 } setTimeout(() => loadHome(), 300) //Chamada tardia da função, para aparecer a tela de load um pouco
 
