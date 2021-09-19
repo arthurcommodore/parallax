@@ -1,12 +1,12 @@
 // importar funções responsável pela página Home
-import {getSubmenu, parallax, exploreEvent} from "./home.js"
+import {parallax, exploreEvent} from "./home.js"
 
 //Utilizado função auto invocal para o usuário não ter acesso
 function view(mode,time) {
     const text = document.getElementById('text')
     setTimeout(() => text.style.display = mode, time)
 }
-getSubmenu()
+
 
 //Vai carregar a página inicial
 function loadHome() {
@@ -17,9 +17,8 @@ function loadHome() {
         .then(text => {
             return new Promise((resolve, reject) => {
                 try {
-
                     content.innerHTML = text
-                    document.getElementById('load').remove()
+                    document.getElementById('load').style.display = 'none'
                     resolve(text)
 
                 }catch(e) {
@@ -56,8 +55,9 @@ function loadContet() {
                     return new Promise((resolve,reject) => {
                         try {
                             content.innerHTML = text
+                            if(nameLink == 'home')
                             view('block', 0)
-                            document.getElementById('load').remove()
+                            document.getElementById('load').style.display = 'none'
                             resolve(text)
                         }catch(e) {
                             reject(e)
@@ -71,6 +71,7 @@ function loadContet() {
                     if(nameLink === 'home') {
                         parallax()
                         exploreEvent()
+                        
                     }
                        
                 }) //Executa o efeito parallax, se a página for a Home
@@ -78,3 +79,27 @@ function loadContet() {
     })
 } loadContet()
 
+
+
+//Essa função vai ter evento do subMenu, do modo mobile
+export  function getSubmenu() {
+    const section = document.querySelector('section')
+    const header = document.querySelector('header')
+    const toggle = document.querySelector('#toggle')
+    const submenu = document.querySelector('#submenu')
+    const lis = document.querySelectorAll('#submenu > li')
+    
+    let submenuActive = false
+    const noneSubmenu = () => {
+        if(submenuActive)
+            submenu.style.display = 'none'
+    } 
+
+    toggle.addEventListener('click', () => {
+        submenu.style.display = 'block'
+        lis.forEach(elem => elem.style.display = 'block')
+        submenuActive = true
+    })
+    
+    section.addEventListener('click', noneSubmenu)
+}getSubmenu()
