@@ -69,7 +69,7 @@ header ul li a.active  {
     color: #2b1055;
 }
 
-a#toggle {
+i#toggle {
     color: white;
     font-size: 1rem;
     cursor: pointer;
@@ -93,6 +93,7 @@ a#toggle {
 
 #submenu li {
     cursor: pointer;
+    margin-bottom: 30px;
 }
 
 #load {
@@ -195,8 +196,18 @@ a#toggle {
     #menu li {
         display: none;
     }
-    a#toggle {
+
+    i#toggle {
         display: inline-block;
+    }
+}
+
+@media(min-width: 821px) {
+    #submenu li a{
+        display: none;
+    }
+    #submenu {
+        opacity: 0;
     }
 }
 
@@ -210,8 +221,14 @@ nav li {
     position: relative;
 }
 
+
+#content {
+    transition: all 1s;
+}
+
 .pre-animation {
     display: flex;
     opacity: 0;
     max-height: 0;
 }
+

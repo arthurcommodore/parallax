@@ -1,8 +1,8 @@
 // importar funções responsável pela página Home
 import {parallax, exploreEvent} from "./home.js"
 
-//Utilizado função auto invocal para o usuário não ter acesso
-function view(mode,time) {
+//Está função foi criada para dar um delay para aparecer o texto
+function viewText(mode,time) {
     const text = document.getElementById('text')
     setTimeout(() => text.style.display = mode, time)
 }
@@ -28,36 +28,42 @@ function loadHome() {
         }).then(text => {
             parallax()
             exploreEvent()
-            view('block', 125)
+            viewText('block', 205) //Aparece o texto com um pequeno delay
         })
-} loadHome()
+} setTimeout(() => loadHome(), 300) //Chamada tardia da função, para aparecer a tela de load um pouco
 
 // Vai carregar todas as páginas solicitadas
 function loadContet() {
-    const links = document.querySelectorAll('#menu a')
-    const content = document.querySelector('#content') 
+    const links = document.querySelectorAll('ul a') //Todos os links
+    const content = document.querySelector('#content') //section que será dado o innerHTML
 
     links.forEach(link => {
         link.onclick = e => {
             e.preventDefault()
-            const nameLink = link.href.split('#')[1].toLowerCase()
+            const nameLink = link.href.split('#')[1].toLowerCase() //Vai pegar apenas o nome do href sem o #
 
+            //Essa parte serve para pegar o que já estava selecionado e oque foi selecionado
             document.querySelector(`#menu a[href='#home']`).classList.remove('active')
             let oldMenu = document.querySelector('.active')
             let newMenu = document.querySelector(`#menu a[href='#${nameLink}']`)
 
+            //Tira a seleção do anterior e coloca no novo
             oldMenu && oldMenu.classList.remove('active')
             newMenu && newMenu.classList.add('active')
             
+            
+            //Ajax sobre o link selecionado
             fetch(`${nameLink}.html`)
                 .then(resp => resp.text()) //Transforma em texto
                 .then(text =>  {
                     return new Promise((resolve,reject) => {
                         try {
+                            content.classList.remove('pre-animation')
                             content.innerHTML = text
                             if(nameLink == 'home')
-                            view('block', 0)
-                            document.getElementById('load').style.display = 'none'
+                                viewText('block', 0) //Aparece o texto sem delay
+
+                            document.getElementById('load').style.display = 'none' //Se carregar tudo tirar a tela de load
                             resolve(text)
                         }catch(e) {
                             reject(e)
@@ -78,8 +84,6 @@ function loadContet() {
         }
     })
 } loadContet()
-
-
 
 //Essa função vai ter evento do subMenu, do modo mobile
 export  function getSubmenu() {

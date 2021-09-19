@@ -1,0 +1,19 @@
+
+.sec2 {
+    position: relative;
+    padding: 100px;
+    background: #1c0522;
+}
+
+.sec2 h2 {
+    margin-top: 10rem;
+    font-size: 3.5em;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.sec2 p {
+    font-size: 1.3em;
+    color: #fff;
+    margin-bottom: 20px;
+}
