@@ -1,8 +1,0 @@
-{
-    "appService.zipIgnorePattern": [
-        "node_modules{,/**}",
-        ".vscode{,/**}"
-    ],
-    "appService.defaultWebAppToDeploy": "/subscriptions/62a5b2c1-3d75-41ba-8938-b3d3718adcd3/resourceGroups/ServersLinux/providers/Microsoft.Web/sites/mooncss",
-    "appService.deploySubpath": "."
-}
