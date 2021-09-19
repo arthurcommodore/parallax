@@ -17,6 +17,7 @@ html, body {
 body {
     min-height: 100vh;
     background: linear-gradient(#2b1055, #7507de);
+    
 }
 
 header {
@@ -29,6 +30,8 @@ header {
     justify-content: space-between;
     align-items: center;
     z-index: 10000;
+    transition: all 1s;
+    
 }
 
 header .logo {
@@ -92,6 +95,15 @@ a#toggle {
     cursor: pointer;
 }
 
+#load {
+    position: absolute;
+    height: 10rem;
+    width: 10rem;
+    left: 46vw;
+    top: 30vh;
+}
+
+
 #background {
     position: relative;
     width: 100%;
@@ -121,19 +133,20 @@ a#toggle {
     height: 100%;
     object-fit: cover;
     pointer-events: none;
+    transform: scale();
 }
 
 #background img#moon {
     mix-blend-mode: screen;
+
 }
 
 #background img#mountains_front {
     z-index: 10;
 }
 
-
-
 #text {
+    display: none;
     position: absolute;
     right: 0;
     color: #fff;
@@ -141,7 +154,6 @@ a#toggle {
     font-size: 7.5vw;
     font-weight: bold;
     z-index: 9;
-    
 }
 
 #btn {
@@ -195,4 +207,10 @@ nav ul {
 nav li {
     display: inline-block;
     position: relative;
+}
+
+.pre-animation {
+    display: flex;
+    opacity: 0;
+    max-height: 0;
 }
